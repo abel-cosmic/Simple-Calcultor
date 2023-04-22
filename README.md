@@ -24,7 +24,7 @@ The following functionalities have been implemented in this project:
 
 Here is a screenshot of the user interface of the calculator:
 
-![Calculator UI](Simple Calculator.png)
+![Calculator UI](https://github.com/abel-cosmic/Simple-Calcultor/blob/main/Simple%20Calculator%20UI%20Design.png)
 
 
 ## How to Run the Project
