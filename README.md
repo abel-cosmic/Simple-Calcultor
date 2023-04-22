@@ -24,7 +24,7 @@ The following functionalities have been implemented in this project:
 
 Here is a screenshot of the user interface of the calculator:
 
-![Calculator UI](/path/to/image.png)
+![Calculator UI](Simple Calculator.png)
 
 
 ## How to Run the Project
