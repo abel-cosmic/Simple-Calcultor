@@ -26,6 +26,8 @@ Here is a screenshot of the user interface of the calculator:
 
 ![Calculator UI](https://github.com/abel-cosmic/Simple-Calcultor/blob/main/Simple%20Calculator%20UI%20Design.png)
 
+## Figma link for the design
+"https://www.figma.com/file/2SHB4Yq4M0JDN2i6kpzxZt/Simple-Calculator?node-id=0%3A1&t=heaLZHB8M5rIdLOc-1"
 
 ## How to Run the Project
 
