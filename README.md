@@ -20,6 +20,13 @@ The following functionalities have been implemented in this project:
 * Multiplication
 * Clear
 
+## User Interface
+
+Here is a screenshot of the user interface of the calculator:
+
+![Calculator UI](/path/to/image.png)
+
+
 ## How to Run the Project
 
 To run the project, you need to have Java and an IDE installed on your system. Here are the steps to follow:
