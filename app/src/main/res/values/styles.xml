@@ -8,18 +8,18 @@
 
     <style name="black_btn" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/darkGray</item>
-        <item name="cornerRadius">10dp</item>
+        <item name="cornerRadius">16dp</item>
     </style>
     <style name="gray_btn" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/gray</item>
-        <item name="cornerRadius">10dp</item>
+        <item name="cornerRadius">16dp</item>
     </style>
     <style name="orange_btn" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/orange</item>
-        <item name="cornerRadius">10dp</item>
+        <item name="cornerRadius">16dp</item>
     </style>
     <style name="white_btn" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/white</item>
-        <item name="cornerRadius">10dp</item>
+        <item name="cornerRadius">16dp</item>
     </style>
 </resources>

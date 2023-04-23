@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
+    android:padding="5dp"
     android:background="@color/midnight">
     <LinearLayout
         android:layout_width="wrap_content"
@@ -22,6 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp"
             android:textSize="20sp"
             android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/white"
@@ -47,10 +49,12 @@
         android:paddingHorizontal="10dp"
         >
         <EditText
-            android:textDirection="rtl"
+            android:id="@+id/answer"
+            android:textDirection="ltr"
+            android:textAlignment="textEnd"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:hint="@string/_0"
+            android:hint="@string/zero"
             android:textSize="40sp"
             android:textColor="@color/white"
             android:fontFamily="@font/poppins"
@@ -80,17 +84,23 @@
                     android:layout_marginEnd="15sp"
                     android:id="@+id/AC"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     android:text="@string/ac"
+                    android:tag="ac"
                     style="@style/gray_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins"
                     android:textColor="@color/white"
                     />
                 <Button
                     android:id="@+id/cancel"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     android:text="@string/c"
+                    android:tag="c"
                     style="@style/gray_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins"
                     android:textColor="@color/white"
                     />
             </LinearLayout>
@@ -102,17 +112,23 @@
                     android:layout_marginEnd="15sp"
                     android:id="@+id/seven"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/_7"
+                    android:layout_height="62dp"
+                    android:text="@string/seven"
+                    android:tag="7"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     />
                 <Button
                     android:id="@+id/eight"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/_8"
+                    android:layout_height="62dp"
+                    android:text="@string/eight"
+                    android:tag="8"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     />
             </LinearLayout>
@@ -126,17 +142,23 @@
                     android:layout_marginEnd="15sp"
                     android:id="@+id/four"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/_4"
+                    android:layout_height="62dp"
+                    android:text="@string/four"
+                    android:tag="4"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     />
                 <Button
                     android:id="@+id/five"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/_5"
+                    android:layout_height="62dp"
+                    android:text="@string/five"
+                    android:tag="5"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     />
             </LinearLayout>
@@ -148,17 +170,22 @@
                     android:layout_marginEnd="15sp"
                     android:id="@+id/one"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/_1"
+                    android:layout_height="62dp"
+                    android:text="@string/one"
+                    android:tag="1"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     />
                 <Button
                     android:id="@+id/two"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:text="@string/_2"
+                    android:layout_height="62dp"
+                    android:text="@string/two"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     />
             </LinearLayout>
@@ -169,10 +196,13 @@
                 <Button
                     android:id="@+id/zero"
                     android:layout_width="190dp"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:tag="0"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
-                    android:text="@string/_0"/>
+                    android:text="@string/zero"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -187,12 +217,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
                 <Button
-                    android:id="@+id/slash"
+                    android:id="@+id/divide"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     style="@style/black_btn"
+                    android:textSize="18dp"
+                    android:tag="/"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
-                    android:text="@string/slash"/>
+                    android:text="@string/divider"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -201,10 +234,13 @@
                 <Button
                     android:id="@+id/nine"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:tag="9"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
-                    android:text="@string/_9"/>
+                    android:text="@string/nine"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -213,10 +249,13 @@
                 <Button
                     android:id="@+id/six"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:tag="6"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
-                    android:text="@string/_6"/>
+                    android:text="@string/six"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -225,10 +264,13 @@
                 <Button
                     android:id="@+id/three"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:tag="3"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
-                    android:text="@string/_3"/>
+                    android:text="@string/three"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -237,8 +279,10 @@
                 <Button
                     android:id="@+id/dot"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="62dp"
                     style="@style/black_btn"
+                    android:textSize="26dp"
+                    android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/orange"
                     android:text="@string/dot"/>
             </LinearLayout>
@@ -256,9 +300,12 @@
                 <Button
                     android:id="@+id/multiply"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    style="@style/black_btn"
-                    android:textColor="@color/orange"
+                    android:layout_height="62dp"
+                    style="@style/orange_btn"
+                    android:textSize="18dp"
+                    android:tag="x"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black"
                     android:text="@string/multiply"/>
         </LinearLayout>
             <LinearLayout
@@ -268,9 +315,12 @@
                 <Button
                     android:id="@+id/minus"
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    style="@style/black_btn"
-                    android:textColor="@color/orange"
+                    android:layout_height="62dp"
+                    style="@style/orange_btn"
+                    android:textSize="26dp"
+                    android:tag="-"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/black"
                     android:text="@string/minus"/>
             </LinearLayout>
             <LinearLayout
@@ -278,11 +328,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
                 <Button
-                    android:id="@+id/add"
+                    android:id="@+id/adder"
                     android:layout_width="wrap_content"
                     android:layout_height="100dp"
                     style="@style/orange_btn"
-                    android:textColor="@color/white"
+                    android:textSize="26dp"
+                    android:tag="+"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textColor="@color/black"
                     android:text="@string/add"/>
             </LinearLayout>
             <LinearLayout
@@ -292,9 +345,12 @@
                 <Button
                     android:id="@+id/equals"
                     android:layout_width="wrap_content"
-                    android:layout_height="90dp"
-                    style="@style/orange_btn"
-                    android:textColor="@color/white"
+                    android:layout_height="92dp"
+                    style="@style/white_btn"
+                    android:textColor="@color/black"
+                    android:textSize="26dp"
+                    android:tag="="
+                    android:fontFamily="@font/poppins_medium"
                     android:text="@string/equals"/>
             </LinearLayout>
 
