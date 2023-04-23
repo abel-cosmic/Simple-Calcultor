@@ -1,4 +1,6 @@
 package com.example.simplecalculator;
+import android.widget.EditText;
+
 import java.util.Locale;
 /*
 * TODO: the methods i made to are considering the following fuctionality:
@@ -10,7 +12,7 @@ import java.util.Locale;
 *
 * */
 public class Calculator {
-    private double currentValue = 0.0;
+    private String currentValue = null;
     private double input = 0.0;
     private double result = 0.0;
 
@@ -47,23 +49,25 @@ public class Calculator {
         return a / b;
     }
     public void performOperation(String operationSymbol) {
+        double value = Integer.parseInt(currentValue);
         switch (operationSymbol) {
             case "+":
-                result = add(currentValue, input);
+                result = add(value, input);
                 break;
             case "-":
-                result = subtract(currentValue, input);
+                result = subtract(value, input);
                 break;
             case "×":
-                result = multiply(currentValue, input);
+                result = multiply(value, input);
                 break;
             case "÷":
-                result = divide(currentValue, input);
+                result = divide(value, input);
                 break;
-        }
+            case "=":
+                input = value;
+                getResult();
 
-        currentValue = result;
-        input = 0.0;
+        }
     }
     void updateDisplay() {
         String text;
@@ -79,7 +83,8 @@ public class Calculator {
         }
     }
     public void clear() {
-        currentValue = 0.0;
+        double value = Integer.parseInt(currentValue);
+        value = 0.0;
         input = 0.0;
         result = 0.0;
         decimalEntered = false;
@@ -93,40 +98,21 @@ public class Calculator {
     }
 
     public void clearAll() {
-        currentValue = 0.0;
+        double value = Integer.parseInt(currentValue);
+        value = 0.0;
         clearEntry();
         result = 0.0;
     }
 
 
     public double getCurrentValue() {
-        return currentValue;
+        double value = Integer.parseInt(currentValue);
+        return value;
     }
 
-    public void setCurrentValue(double currentValue) {
-        this.currentValue = currentValue;
-    }
-
-    public double getInput() {
-        return input;
-    }
-
-    public void setInput(double input) {
-        this.input = input;
-    }
 
     public double getResult() {
         return result;
     }
 
-    public void setResult(double result) {
-        this.result = result;
-    }
-    public boolean isDecimalEntered() {
-        return decimalEntered;
-    }
-
-    public void setDecimalEntered(boolean decimalEntered) {
-        this.decimalEntered = decimalEntered;
-    }
 }

@@ -35,16 +35,14 @@ import android.widget.EditText;
 * */
 public class MainActivity extends AppCompatActivity {
     private Calculator calculator;
-    private EditText displayView;
-    private Button[] digitButtons;
-    private Button[] operationButtons;
-    private Button btnAc,btnC,btnDot;
     @Override
     protected void onCreate(Bundle savedInstanceState) throws Resources.NotFoundException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //create the object of calculator
+        Button[] digitButtons;
+        Button[] operationButtons;
 
         calculator = new Calculator();
 
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         operationButtons[1] = findViewById(R.id.minus);
         operationButtons[2] = findViewById(R.id.divide);
         operationButtons[3] = findViewById(R.id.multiply);
+        operationButtons[4] = findViewById(R.id.equals);
 
         // Set onClickListener for operation buttons
 
@@ -99,17 +98,28 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     operationSymbol = "÷";
                     break;
+                case 4:
+                    operationSymbol = "=";
+                    break;
                 default:
                     operationSymbol = "";
+                    break;
             }
             operationButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     calculator.performOperation(operationSymbol);
                     calculator.updateDisplay();
+                    EditText displayView;
+                    displayView = (EditText) findViewById(R.id.answer);
+                    displayView.setText(String.valueOf(calculator.getResult()));
                 }
             });
         }
+
+        Button btnAc = (Button)findViewById(R.id.AC);
+        Button btnC=(Button)findViewById(R.id.cancel);
+        Button btnDot=(Button) findViewById(R.id.dot);
 
         // Initialize extras buttons
         btnDot.setOnClickListener(
@@ -118,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         calculator.enterDecimal();
                         calculator.updateDisplay();
+                        EditText displayView;
+                        displayView = (EditText) findViewById(R.id.answer);
+                        displayView.setText(String.valueOf(calculator.getResult()));
                     }
                 }
         );
@@ -127,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         calculator.clearAll();
                         calculator.updateDisplay();
+                        EditText displayView;
+                        displayView = (EditText) findViewById(R.id.answer);
+                        displayView.setText(String.valueOf(calculator.getResult()));
                     }
                 }
         );
@@ -136,11 +152,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         calculator.clear();
                         calculator.updateDisplay();
+                        EditText displayView;
+                        displayView = (EditText) findViewById(R.id.answer);
+                        displayView.setText(String.valueOf(calculator.getResult()));
                     }
                 }
         );
 
-        displayView = (EditText) findViewById(R.id.answer);
-        displayView.setText(String.valueOf(calculator.getResult()));
+
     }
 }
