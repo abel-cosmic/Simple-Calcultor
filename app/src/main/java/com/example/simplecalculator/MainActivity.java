@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /*
 * TODO: use one of the following layouts:
@@ -35,6 +36,8 @@ import android.widget.EditText;
 * */
 public class MainActivity extends AppCompatActivity {
     private Calculator calculator;
+    private String temp;
+    private int number,result;
     @Override
     protected void onCreate(Bundle savedInstanceState) throws Resources.NotFoundException {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         digitButtons[8] = findViewById(R.id.eight);
         digitButtons[9] = findViewById(R.id.nine);
 
+
+
          // add an onClick listener for each digitButton
         for (int i = 0; i < digitButtons.length; i++) {
             int digit = i;
@@ -67,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     calculator.enterDigit(digit);
+                    EditText equation=(EditText) findViewById(R.id.equation);
+                    temp = String.valueOf(equation.getText());
+                    equation.setText(temp + digit);
                     calculator.updateDisplay();
                 }
             });
@@ -74,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize operation buttons
 
-        operationButtons = new Button[4];
+        operationButtons = new Button[5];
         operationButtons[0] = findViewById(R.id.adder);
         operationButtons[1] = findViewById(R.id.minus);
         operationButtons[2] = findViewById(R.id.divide);
@@ -93,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
                     operationSymbol = "-";
                     break;
                 case 2:
-                    operationSymbol = "×";
+                    operationSymbol = "/";
                     break;
                 case 3:
-                    operationSymbol = "÷";
+                    operationSymbol = "x";
                     break;
                 case 4:
                     operationSymbol = "=";
@@ -110,17 +118,28 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     calculator.performOperation(operationSymbol);
                     calculator.updateDisplay();
-                    EditText displayView;
-                    displayView = (EditText) findViewById(R.id.answer);
-                    displayView.setText(String.valueOf(calculator.getResult()));
+                    EditText answer = (EditText) findViewById(R.id.answer);
+                    answer.setText(String.valueOf(calculator.getResult()));
+                    EditText equation=(EditText) findViewById(R.id.equation);
+                    temp = String.valueOf(equation.getText());
+                    if(calculator.getResult() == 0.0){
+                        answer.setText(calculator.getValue());
+                    }
+                    if(operationSymbol == "="){
+                        equation.setText(String.valueOf(calculator.getResult()));
+                        answer.setText(" ");
+                    }else{
+                        equation.setText(temp + operationSymbol);
+                    }
+
                 }
             });
         }
+        //for displaying the equation portion only
 
         Button btnAc = (Button)findViewById(R.id.AC);
         Button btnC=(Button)findViewById(R.id.cancel);
         Button btnDot=(Button) findViewById(R.id.dot);
-
         // Initialize extras buttons
         btnDot.setOnClickListener(
                 new View.OnClickListener() {
@@ -128,8 +147,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         calculator.enterDecimal();
                         calculator.updateDisplay();
-                        EditText displayView;
-                        displayView = (EditText) findViewById(R.id.answer);
+                        EditText displayView = (EditText) findViewById(R.id.answer);
+                        if(calculator.getResult() == 0.0){
+                            displayView.setText(calculator.getValue());
+                        }
                         displayView.setText(String.valueOf(calculator.getResult()));
                     }
                 }
@@ -140,9 +161,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         calculator.clearAll();
                         calculator.updateDisplay();
-                        EditText displayView;
-                        displayView = (EditText) findViewById(R.id.answer);
-                        displayView.setText(String.valueOf(calculator.getResult()));
+                        EditText equation = (EditText) findViewById(R.id.equation);
+                        EditText answer = (EditText) findViewById(R.id.answer);
+                        answer.setText(" ");
+                        equation.setText(" ");
                     }
                 }
         );
@@ -150,15 +172,19 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        calculator.clear();
+                        calculator.clearEntry();
                         calculator.updateDisplay();
-                        EditText displayView;
-                        displayView = (EditText) findViewById(R.id.answer);
-                        displayView.setText(String.valueOf(calculator.getResult()));
+                        EditText equation = (EditText) findViewById(R.id.equation);
+                        EditText answer = (EditText) findViewById(R.id.answer);
+                        if(calculator.getResult() == 0.0){
+                            equation.setText(" ");
+                            answer.setText(String.valueOf(calculator.getResult()));
+                        }else{
+                            equation.setText(String.valueOf(calculator.getResult()));
+                        }
+
                     }
                 }
         );
-
-
     }
 }

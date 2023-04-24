@@ -1,5 +1,4 @@
 package com.example.simplecalculator;
-import android.widget.EditText;
 
 import java.util.Locale;
 /*
@@ -12,19 +11,26 @@ import java.util.Locale;
 *
 * */
 public class Calculator {
-    private String currentValue = null;
+    private double currentValue = 0.0;
+    private String value = String.valueOf(currentValue);
+
+    public String getValue() {
+        return null;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     private double input = 0.0;
     private double result = 0.0;
-
     private boolean decimalEntered = false;
-
     public Calculator() {
         this.currentValue = currentValue;
         this.result = result;
         this.input = input;
     }
     public void enterDigit(int digit) {
-
         input = input * 10 + digit;
     }
     public void enterDecimal() {
@@ -33,41 +39,44 @@ public class Calculator {
             decimalEntered = true;
         }
     }
-    private double add(double a, double b) {
-        return a + b;
+    private double add() {
+        return (currentValue + input);
     }
 
-    private double subtract(double a, double b) {
-        return a - b;
+    private double subtract() {
+
+        return (currentValue - input);
     }
 
-    private double multiply(double a, double b) {
-        return a * b;
+    private double multiply() {
+        return (currentValue * input);
     }
 
-    private double divide(double a, double b) {
-        return a / b;
+    private double divide() {
+
+        return (currentValue / input);
     }
+
     public void performOperation(String operationSymbol) {
-        double value = Integer.parseInt(currentValue);
         switch (operationSymbol) {
             case "+":
-                result = add(value, input);
+                result = add();
                 break;
             case "-":
-                result = subtract(value, input);
+                result = subtract();
                 break;
-            case "×":
-                result = multiply(value, input);
+            case "x":
+                result = multiply();
                 break;
-            case "÷":
-                result = divide(value, input);
+            case "/":
+                result = divide();
                 break;
             case "=":
-                input = value;
-                getResult();
-
+                result = getResult();
+                break;
         }
+        currentValue = result;
+        input = 0.0;
     }
     void updateDisplay() {
         String text;
@@ -83,8 +92,7 @@ public class Calculator {
         }
     }
     public void clear() {
-        double value = Integer.parseInt(currentValue);
-        value = 0.0;
+        currentValue = 0.0;
         input = 0.0;
         result = 0.0;
         decimalEntered = false;
@@ -98,21 +106,10 @@ public class Calculator {
     }
 
     public void clearAll() {
-        double value = Integer.parseInt(currentValue);
-        value = 0.0;
+        currentValue = 0.0;
         clearEntry();
         result = 0.0;
     }
 
-
-    public double getCurrentValue() {
-        double value = Integer.parseInt(currentValue);
-        return value;
-    }
-
-
-    public double getResult() {
-        return result;
-    }
-
+    public double getResult() {return result;}
 }

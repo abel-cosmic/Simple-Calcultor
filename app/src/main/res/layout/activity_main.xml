@@ -41,25 +41,35 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:paddingHorizontal="10dp"
+        android:layout_marginTop="140dp"
+        android:orientation="vertical"
         >
         <EditText
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text=" "
+            android:fontFamily="@font/poppins"
+            android:textSize="40sp"
+            android:textAlignment="textEnd"
+            android:id="@+id/equation"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/midnight"
+            />
+        <EditText
             android:id="@+id/answer"
-            android:textDirection="ltr"
             android:textAlignment="textEnd"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:hint="@string/zero"
             android:textSize="40sp"
             android:textColor="@color/white"
             android:fontFamily="@font/poppins"
             android:textColorHint="@color/hintColor"
             android:backgroundTint="@color/white"
+            android:cursorVisible="false"
             />
     </LinearLayout>
 
