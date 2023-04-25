@@ -1,8 +1,14 @@
 package com.example.simplecalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.text.InputType;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 /*
@@ -32,16 +38,11 @@ import android.widget.EditText;
  *  extra button : CLEAR, All CLEAR
  * */
 public class MainActivity extends AppCompatActivity {
-    private double num1 = 0.0;
-    private double num2 = 0.0;
-    private String operator = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //create the object of calculator
-        Button[] digitButtons;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Button[] buttons = new Button[] {
                 findViewById(R.id.zero),
                 findViewById(R.id.one),
@@ -63,100 +64,101 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.equals)
         };
         for (Button button : buttons) {
-            button.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            EditText equationEditText = (EditText) findViewById(R.id.equation);
-                            EditText resultEditText = (EditText) findViewById(R.id.answer);
-                            performClick(v, equationEditText, resultEditText);
-                        }
-                    });
-        }
-
-
-
-    }
-    private void performClick(View view, EditText equationEditText, EditText resultEditText) {
-        Button button = (Button) view;
-        String text = button.getText().toString();
-
-        if (text.matches("[0-9.]")) {
-
-            // Handle digit and decimal point button click event
-            String equation = equationEditText.getText().toString();
-            equationEditText.setText(equation + text);
-            resultEditText.setText(""); // Clear result
-
-        } else if (text.matches("[+\\-*/]")) {
-
-            // Handle operator button click event
-
-            if (!equationEditText.getText().toString().isEmpty()) {
-                num1 = Double.parseDouble(equationEditText.getText().toString());
-                operator = text;
-                equationEditText.setText(""); // Clear expression
-                resultEditText.setText(num1 + " " + operator + " ");//show equation with out the result and equals sign.
-
-            }
-
-        } else if (text.equals("=")) {
-
-            // Handle equals button click event
-
-            if (!(operator.isEmpty())) {
-                num2 = Double.parseDouble(equationEditText.getText().toString());
-                double result = performOperation(num1, num2, operator);
-                equationEditText.setText(num1 + " " + operator + " " + num2); // Show full equation with result
-                resultEditText.setText("= " + result);// Show result only
-                num1 = result; // Store result as num1 for subsequent calculations
-                operator = "";
-            }
-        } else if (text.equals("C")) {
-
-            // Handle clear button click event
-            String equation = equationEditText.getText().toString();
-            if (!equation.isEmpty()) {
-                String before = equation.substring(0, equation.length() - 1);
-                resultEditText.setText(before);
-            }
-        }
-        else if (text.equals("AC")) {
-
-            // Handle all clear button click event
-
-            num1 = 0;
-            num2 = 0;
-            operator = "";
-            equationEditText.setText("");
-            resultEditText.setText("");
-        }
-        else if (text.equals(".")) {
-            // Handle decimal point button click event
-            String equation = equationEditText.getText().toString();
-            if (equation.isEmpty()) {
-                equationEditText.setText("0.");
-            } else if (!equation.contains(".")) {
-                equationEditText.setText(equation + ".");
-            }
-        }
-    }
-    private double performOperation(double num1, double num2, String operator) {
-        switch (operator) {
-            case "+":
-                return num1 + num2;
-            case "-":
-                return num1 - num2;
-            case "*":
-                return num1 * num2;
-            case "/":
-                if (num2 != 0) {
-                    return num1 / num2;
-                } else {
-                    return Double.NaN;
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Get a reference to the system's AudioManager
+                    AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                    // Get a reference to the system's Vibrator
+                    Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    // Check if the device is in vibrate mode
+                    if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
+                        // Vibrate the device for 50 milliseconds when the user taps a button
+                        vibrator.vibrate(50);
+                    }
+                    EditText equationEditText = (EditText) findViewById(R.id.equation);
+                    EditText resultEditText = (EditText) findViewById(R.id.answer);
+                    equationEditText.setInputType(InputType.TYPE_NULL);
+                    performClick(v, equationEditText, resultEditText);
                 }
-            default:
-                return 0.0;
+            });
+        }
+
+
+
+
+    }
+    private void performClick(View v, EditText equationEditText, EditText resultTextView) {
+        String currentEquation = equationEditText.getText().toString();
+        String buttonValue = ((Button) v).getText().toString();
+        String equation = equationEditText.getText().toString();
+        if (buttonValue.equals("AC")) {
+            equationEditText.setText("");
+            resultTextView.setText("");
+        } else if (buttonValue.equals("=")) {
+            try {
+                double result = Double.parseDouble(calculate(currentEquation));
+                equationEditText.setText(Double.toString(result));
+                resultTextView.setText("");
+            } catch (Exception e) {
+                resultTextView.setText("Invalid Equation");
+            }
+        } else if (buttonValue.equals("C")) {
+            if (!equation.isEmpty()) {
+                equationEditText.setText(equation.substring(0, equation.length() - 1));
+                resultTextView.setText(calculate(equationEditText.getText().toString()));
+            }
+        } else if (buttonValue.equals("-") && currentEquation.isEmpty()) {
+            equationEditText.setText("-");
+        } else if (buttonValue.equals("+") || buttonValue.equals("-") || buttonValue.equals("*") || buttonValue.equals("/")) {
+            if (currentEquation.endsWith("-")) {
+                return;
+            }
+            equationEditText.setText(currentEquation + buttonValue);
+            resultTextView.setText(calculate(equationEditText.getText().toString()));
+        } else {
+            equationEditText.setText(currentEquation + buttonValue);
+            resultTextView.setText(calculate(equationEditText.getText().toString()));
+        }
+    }
+    public static String calculate(String input) {
+        String[] operands = input.split("[+\\-*/]");
+        String[] operators = input.replaceAll("[^+\\-*/]", "").split("");
+        double result = 0;
+        boolean firstOperand = true;
+        for (int i = 0; i < operands.length; i++) {
+            double operand;
+            if (operands[i].isEmpty()) {
+                operand = 0;
+            } else {
+                operand = Double.parseDouble(operands[i]);
+            }
+            if (firstOperand) {
+                result = operand;
+                firstOperand = false;
+            } else {
+                switch (operators[i - 1]) {
+                    case "+":
+                        result += operand;
+                        break;
+                    case "-":
+                        result -= operand;
+                        break;
+                    case "*":
+                        result *= operand;
+                        break;
+                    case "/":
+                        result /= operand;
+                        break;
+                }
+            }
+        }
+        if (result % 1 == 0) {
+            // result is a whole number
+            return Integer.toString((int) result);
+        } else {
+            // result is a decimal number
+            return Double.toString(result);
         }
     }
 }

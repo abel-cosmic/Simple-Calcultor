@@ -58,17 +58,16 @@
             android:id="@+id/equation"
             android:textColor="@color/white"
             android:backgroundTint="@color/midnight"
+            android:cursorVisible="false"
             />
         <EditText
             android:id="@+id/answer"
             android:textAlignment="textEnd"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:hint="@string/zero"
             android:textSize="40sp"
-            android:textColor="@color/white"
+            android:textColor="@color/hintColor"
             android:fontFamily="@font/poppins"
-            android:textColorHint="@color/hintColor"
             android:backgroundTint="@color/white"
             android:cursorVisible="false"
             />
