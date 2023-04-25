@@ -1,18 +1,39 @@
 package com.example.simplecalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.text.BreakIterator;
-
+/*
+ * TODO: use one of the following layouts:
+ *  - LinearLayout
+ *  - AbsoluteLayout
+ *  - RelativeLayout
+ *  - FrameLayout
+ *  - ScrollView
+ *
+ * */
+/*
+ * TODO: we have to do the following functionalities
+ *  - addition
+ *  - substraction
+ *  - division
+ *  - multiplication
+ *  - clear
+ *  - all clear
+ *
+ * */
+/*
+ * TODO: the button names should be the name of the numbers like: 1 == one....
+ *  numbered Buttons : 1,2,3,4,5,6,7,8,9,0
+ *  decimal button : .
+ *  operation buttons : +, - , / , *
+ *  extra button : CLEAR, All CLEAR
+ * */
 public class MainActivity extends AppCompatActivity {
-    private double num1 = 0;
-    private double num2 = 0;
+    private double num1 = 0.0;
+    private double num2 = 0.0;
     private String operator = "";
 
     @Override
@@ -63,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         if (text.matches("[0-9.]")) {
 
             // Handle digit and decimal point button click event
-
             String equation = equationEditText.getText().toString();
             equationEditText.setText(equation + text);
             resultEditText.setText(""); // Clear result
@@ -85,21 +105,20 @@ public class MainActivity extends AppCompatActivity {
             // Handle equals button click event
 
             if (!(operator.isEmpty())) {
-
                 num2 = Double.parseDouble(equationEditText.getText().toString());
                 double result = performOperation(num1, num2, operator);
-                resultEditText.setText(num1 + " " + operator + " " + num2 + " = " + result); // Show full equation with result
-                equationEditText.setText(Double.toString(result)); // Show result only
+                equationEditText.setText(num1 + " " + operator + " " + num2); // Show full equation with result
+                resultEditText.setText("= " + result);// Show result only
                 num1 = result; // Store result as num1 for subsequent calculations
                 operator = "";
             }
         } else if (text.equals("C")) {
 
             // Handle clear button click event
-
             String equation = equationEditText.getText().toString();
             if (!equation.isEmpty()) {
-                equationEditText.setText(equation.substring(0, equation.length() - 1));
+                String before = equation.substring(0, equation.length() - 1);
+                resultEditText.setText(before);
             }
         }
         else if (text.equals("AC")) {

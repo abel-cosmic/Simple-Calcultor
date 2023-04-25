@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:padding="8dp"
     android:background="@color/midnight">
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,29 +43,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="10dp"
+        android:paddingHorizontal="5dp"
         android:orientation="vertical"
         >
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:text=" "
-            android:fontFamily="@font/roboto_condensed_bold"
-            android:textSize="40sp"
+            android:fontFamily="@font/poppins"
+            android:textSize="34sp"
             android:textAlignment="textEnd"
-            android:id="@+id/answer"
+            android:id="@+id/equation"
             android:textColor="@color/white"
             android:backgroundTint="@color/midnight"
             />
         <EditText
-            android:id="@+id/equation"
+            android:id="@+id/answer"
             android:textAlignment="textEnd"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:hint="@string/zero"
             android:textSize="40sp"
             android:textColor="@color/white"
-            android:fontFamily="@font/roboto_condensed_bold"
+            android:fontFamily="@font/poppins"
             android:textColorHint="@color/hintColor"
             android:backgroundTint="@color/white"
             android:cursorVisible="false"
@@ -75,10 +76,11 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:orientation="horizontal"
-        android:padding="15dp">
-
+        android:paddingHorizontal="15dp"
+        >
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="62dp"
                     android:text="@string/ac"
-                    android:tag="AC"
+                    android:tag="ac"
                     style="@style/gray_btn"
                     android:textSize="26dp"
                     android:fontFamily="@font/poppins"
@@ -107,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="62dp"
                     android:text="@string/c"
-                    android:tag="C"
+                    android:tag="c"
                     style="@style/gray_btn"
                     android:textSize="26dp"
                     android:fontFamily="@font/poppins"
@@ -312,11 +314,11 @@
                     android:layout_height="62dp"
                     style="@style/orange_btn"
                     android:textSize="18dp"
-                    android:tag="*"
+                    android:tag="x"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/black"
                     android:text="@string/multiply"/>
-        </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -363,8 +365,8 @@
                     android:text="@string/equals"/>
             </LinearLayout>
 
+        </LinearLayout>
+
+
     </LinearLayout>
-
-
-</LinearLayout>
 </LinearLayout>
