@@ -230,11 +230,11 @@
                     android:id="@+id/divide"
                     android:layout_width="wrap_content"
                     android:layout_height="62dp"
-                    style="@style/black_btn"
+                    style="@style/orange_btn"
                     android:textSize="18dp"
                     android:tag="/"
                     android:fontFamily="@font/poppins_bold"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/black"
                     android:text="@string/divider"/>
             </LinearLayout>
             <LinearLayout
