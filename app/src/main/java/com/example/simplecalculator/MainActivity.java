@@ -120,6 +120,9 @@ public class MainActivity extends AppCompatActivity {
         else if (buttonValue.matches("[+\\-*/]")) {// checks if the button is inputting operations
             if (currentEquation.endsWith("-")) {
                 return;
+            }else if(currentEquation.isEmpty()){
+                Toast.makeText(this,"Invalid format used.",Toast.LENGTH_SHORT);
+                return;
             }
             equationEditText.setText(currentEquation + buttonValue);
             resultTextView.setText(calculate(equationEditText.getText().toString()));
