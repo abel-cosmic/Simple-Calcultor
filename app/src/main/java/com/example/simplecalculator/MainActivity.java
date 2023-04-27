@@ -118,19 +118,13 @@ public class MainActivity extends AppCompatActivity {
             equationEditText.setText("-");
         }
         else if (buttonValue.matches("[+\\-*/]")) {// checks if the button is inputting operations
-            if (currentEquation.endsWith("-")) {
+            if (currentEquation.matches("[+\\-*/]$")) {
+                Toast.makeText(this,"Invalid format used.",Toast.LENGTH_SHORT);
                 return;
             }
             equationEditText.setText(currentEquation + buttonValue);
             resultTextView.setText(calculate(equationEditText.getText().toString()));
         }
-//        else if(clear){
-//            equation = (currentEquation.substring(0,currentEquation.length()-(currentEquation.length()-2)) + buttonValue );
-//            currentEquation=equation;
-//            equationEditText.setText(currentEquation);
-//            resultTextView.setText("");
-//            clear = false;
-//        }
         else if (currentEquation.endsWith("/") && buttonValue.equals("0")) {// makes division by zero to display toast message and resets the last input and intermediate result to be reset too
             resultTextView.setText("");
             Toast.makeText(this,"can't divide by zero",Toast.LENGTH_LONG).show();
