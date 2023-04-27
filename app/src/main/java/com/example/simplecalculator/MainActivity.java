@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /*
  *  use one of the following layouts:
  *  - LinearLayout
@@ -40,13 +43,13 @@ import android.widget.Toast;
  *  extra button : CLEAR, All CLEAR
  * */
 public class MainActivity extends AppCompatActivity {
-    static boolean clear = false;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        Button[] buttons = new Button[] {
+        Button[] buttons = new Button[]{
                 findViewById(R.id.zero),
                 findViewById(R.id.one),
                 findViewById(R.id.two),
@@ -88,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
     }
+
     private void performClick(View v, EditText equationEditText, EditText resultTextView) {
         String currentEquation = equationEditText.getText().toString();
         String buttonValue = ((Button) v).getText().toString();
@@ -98,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
         if (buttonValue.equals("AC")) {// - performs all clear from both text views
             equationEditText.setText("");
             resultTextView.setText("");
-        }
-        else if (buttonValue.equals("=")) {// -displays the end result
+        } else if (buttonValue.equals("=")) {// -displays the end result
             try {
                 double result = Double.parseDouble(calculate(currentEquation));
                 equationEditText.setText(Double.toString(result));
@@ -107,43 +108,53 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 resultTextView.setText("Invalid Equation");
             }
-        }
-        else if (buttonValue.equals("C")) {// -deletes the last entry
+        } else if (buttonValue.equals("C")) {// -deletes the last entry
             if (!equation.isEmpty()) {
                 equationEditText.setText(equation.substring(0, equation.length() - 1));
                 resultTextView.setText(calculate(equationEditText.getText().toString()));
             }
-        }
-        else if (buttonValue.equals("-") && currentEquation.isEmpty()) {// makes inputting negative number first applicable
+        } else if (buttonValue.equals("-") && currentEquation.isEmpty()) {// makes inputting negative number first applicable
             equationEditText.setText("-");
-        }
-        else if (buttonValue.matches("[+\\-*/]")) {// checks if the button is inputting operations
+        } else if (buttonValue.matches("[+\\-*/]")) {// checks if the button is inputting operations
+            String s = currentEquation.substring(0, currentEquation.length() - 1) + buttonValue;
             if (currentEquation.endsWith("-")) {
+               currentEquation = s;
+               equationEditText.setText(currentEquation);
+                return;
+            }
+            if (currentEquation.endsWith("+")) {
+                currentEquation = s;
+               equationEditText.setText(currentEquation);
+                return;
+            }
+            if (currentEquation.endsWith("*")) {
+                currentEquation = s;
+               equationEditText.setText(currentEquation);
+                return;
+            }
+            if (currentEquation.endsWith("/")) {
+                currentEquation = s;
+               equationEditText.setText(currentEquation);
                 return;
             }
             equationEditText.setText(currentEquation + buttonValue);
             resultTextView.setText(calculate(equationEditText.getText().toString()));
         }
-//        else if(clear){
-//            equation = (currentEquation.substring(0,currentEquation.length()-(currentEquation.length()-2)) + buttonValue );
-//            currentEquation=equation;
-//            equationEditText.setText(currentEquation);
-//            resultTextView.setText("");
-//            clear = false;
-//        }
         else if (currentEquation.endsWith("/") && buttonValue.equals("0")) {// makes division by zero to display toast message and resets the last input and intermediate result to be reset too
             resultTextView.setText("");
-            Toast.makeText(this,"can't divide by zero",Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "can't divide by zero", Toast.LENGTH_LONG).show();
 //TODO: append the operations if their was an operation already. like 8+-/* should be 8*
-        } else if(buttonValue.matches("[+\\-*/]") &&(currentEquation.endsWith("/")||currentEquation.endsWith("+")||currentEquation.endsWith("-")||currentEquation.endsWith("*"))){//TODO: this doesn't work
-            currentEquation= currentEquation.substring(0,currentEquation.length()-(currentEquation.length()-2));
-            equationEditText.setText( currentEquation + buttonValue);
-       }
-       else {
+        }
+//        else if (signs.contains(currentEquation.charAt(currentEquation.length() - 2)) && signs.contains(currentEquation.charAt(currentEquation.length() - 1))) {
+//            currentEquation = currentEquation.substring(0, (currentEquation.length()-2) + (currentEquation.length() - 2));
+//            equationEditText.setText(currentEquation + buttonValue);
+//        }
+        else {
             equationEditText.setText(currentEquation + buttonValue);
             resultTextView.setText(calculate(equationEditText.getText().toString()));
         }
     }
+
     public static String calculate(String input) {
         String[] operands = input.split("[+\\-*/]");
         String[] operators = input.replaceAll("[^+\\-*/]", "").split("");
