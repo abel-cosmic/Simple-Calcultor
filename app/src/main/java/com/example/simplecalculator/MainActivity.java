@@ -1,7 +1,5 @@
 package com.example.simplecalculator;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -12,33 +10,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-/*
- *  use one of the following layouts:
- *  - LinearLayout
- *  - AbsoluteLayout
- *  - RelativeLayout
- *  - FrameLayout
- *  - ScrollView
- *
- * */
-/*
- *  we have to do the following functionalities
- *  - addition
- *  - substraction
- *  - division
- *  - multiplication
- *  - clear
- *  - all clear
- *
- * */
-/*
- *  the button names should be the name of the numbers like: 1 == one....
- *  numbered Buttons : 1,2,3,4,5,6,7,8,9,0
- *  decimal button : .
- *  operation buttons : +, - , / , *
- *  extra button : CLEAR, All CLEAR
- * */
 public class MainActivity extends AppCompatActivity {
     static boolean clear = false;
     @Override
@@ -79,85 +50,148 @@ public class MainActivity extends AppCompatActivity {
                         // Vibrate the device for 50 milliseconds when the user taps a button
                         vibrator.vibrate(50);
                     }
-                    EditText equationEditText = (EditText) findViewById(R.id.equation);
-                    EditText resultEditText = (EditText) findViewById(R.id.answer);
+                    EditText equationEditText = (EditText) findViewById(R.id.equation);// the upper equation displaying edit text
+                    EditText resultEditText = (EditText) findViewById(R.id.answer);// the lower result displaying edit text
                     equationEditText.setInputType(InputType.TYPE_NULL);
                     performClick(v, equationEditText, resultEditText);
                 }
             });
         }
-
-
-
-
     }
-    private void performClick(View v, EditText equationEditText, EditText resultTextView) {
+    private void performClick(View v, EditText equationEditText, EditText resultTextView) {//onclick listener
         String currentEquation = equationEditText.getText().toString();
         String buttonValue = ((Button) v).getText().toString();
         String equation = equationEditText.getText().toString();
         if (buttonValue.equals("AC")) {// - performs all clear from both text views
             equationEditText.setText("");
             resultTextView.setText("");
-        }
-        else if (buttonValue.equals("=")) {// -displays the end result
+        }else if(clear){// performs can't divide by zero concept
+           if(buttonValue.equals("=")){//checks if equals button is clicked while division by zero is applied
+               resultTextView.setText("");
+               if(!equationEditText.getText().toString().isEmpty()){
+                   resultTextView.setText("");
+                   Toast.makeText(this, "Can't divide by zero.", Toast.LENGTH_SHORT).show();
+               }
+               clear = false;
+           }
+            if (buttonValue.equals("C")) {// -deletes the last entry while division by zero is applied
+                if (!equation.isEmpty()) {
+                    equationEditText.setText(equation.substring(0, equation.length()-2));
+                    resultTextView.setText(calculate(equationEditText.getText().toString()));
+                }
+                clear= false;
+                return;
+            }
+           return;
+        } else if ((currentEquation.endsWith("/")||currentEquation.endsWith("+") ||currentEquation.endsWith("-")||currentEquation.endsWith("*"))&& buttonValue.equals("=")) {
+            // checks if equals is clicked while suffix is operation
+            resultTextView.setText("");
+            Toast.makeText(this, "Invalid format used.", Toast.LENGTH_SHORT).show();
+            resultTextView.setText("");
+            return;
+
+        } else if (buttonValue.equals("=")) {// -displays the end result
             try {
+                if(currentEquation.isEmpty()){// if we tried to see the result with out inputting anything
+                    Toast.makeText(this, "Invalid format used.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 double result = Double.parseDouble(calculate(currentEquation));
                 equationEditText.setText(Double.toString(result));
                 resultTextView.setText("");
             } catch (Exception e) {
-                resultTextView.setText("Invalid Equation");
+                Toast.makeText(this, "Invalid Equation.", Toast.LENGTH_SHORT).show();
+                return;
             }
         }
         else if (buttonValue.equals("C")) {// -deletes the last entry
             if (!equation.isEmpty()) {
-                equationEditText.setText(equation.substring(0, equation.length() - 1));
+                equationEditText.setText(equation.substring(0,equation.length()-1));
                 resultTextView.setText(calculate(equationEditText.getText().toString()));
+            } else if (equationEditText.getText().toString().equals("")) {
+                resultTextView.setText("");
             }
         }
         else if (buttonValue.equals("-") && currentEquation.isEmpty()) {// makes inputting negative number first applicable
             equationEditText.setText("-");
         }
-        else if (buttonValue.matches("[+\\-*/]")) {// checks if the button is inputting operations
-            if (currentEquation.endsWith("-")) {
+        else if (buttonValue.matches("[+\\-*/.]") && !currentEquation.isEmpty()) {// checks if the button is inputting operations
+            String s = currentEquation.substring(0, currentEquation.length() - 1) + buttonValue;
+            if ((currentEquation.endsWith("-"))||(currentEquation.endsWith("+"))||(currentEquation.endsWith("*"))||(currentEquation.endsWith("/"))||(currentEquation.endsWith("."))) {
+                // to append operations if the user wants to change it
+                if(buttonValue.equals(".")){//if the user inputs . only to add prefix 0 while the equation is not empty
+                    equationEditText.setText(currentEquation+"0"+buttonValue);
+                    return;
+                }
+                currentEquation = s;
+                equationEditText.setText(currentEquation);
                 return;
-            }else if(currentEquation.isEmpty()){
-                Toast.makeText(this,"Invalid format used.",Toast.LENGTH_SHORT);
+            }
+            if(buttonValue.equals(".") && currentEquation.endsWith("/")){//adds prefix 0
+                equationEditText.setText(currentEquation +"0"+ buttonValue);
                 return;
             }
             equationEditText.setText(currentEquation + buttonValue);
             resultTextView.setText(calculate(equationEditText.getText().toString()));
         }
-//        else if(clear){
-//            equation = (currentEquation.substring(0,currentEquation.length()-(currentEquation.length()-2)) + buttonValue );
-//            currentEquation=equation;
-//            equationEditText.setText(currentEquation);
-//            resultTextView.setText("");
-//            clear = false;
-//        }
-        else if (currentEquation.endsWith("/") && buttonValue.equals("0")) {// makes division by zero to display toast message and resets the last input and intermediate result to be reset too
-            resultTextView.setText("");
-            Toast.makeText(this,"can't divide by zero",Toast.LENGTH_LONG).show();
-//TODO: append the operations if their was an operation already. like 8+-/* should be 8*
-        } else if(buttonValue.matches("[+\\-*/]") &&(currentEquation.endsWith("/")||currentEquation.endsWith("+")||currentEquation.endsWith("-")||currentEquation.endsWith("*"))){//TODO: this doesn't work
-            currentEquation= currentEquation.substring(0,currentEquation.length()-(currentEquation.length()-2));
-            equationEditText.setText( currentEquation + buttonValue);
-       }
-       else {
+        else if((buttonValue.matches("[+\\-*/]")) && currentEquation.isEmpty()){//not to add operation while the equation is empty
+            Toast.makeText(this, "Invalid format used.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(currentEquation.isEmpty() && buttonValue.equals(".")){//to add 0 as prefix if the equation is empty
+            equationEditText.setText("0"+buttonValue);
+        }
+        else if (buttonValue.equals(".")&& !currentEquation.matches("[+\\-*/.]$")){ // to append the integers/operands into double
+            equationEditText.setText(currentEquation + buttonValue);
+        }
+        else if(buttonValue.equals(".")){// handles if the user adds dot before doing anything
+             if(currentEquation.isEmpty()){
+                 if(currentEquation.endsWith("/")){
+                     Toast.makeText(this, "Illegal start of equation", Toast.LENGTH_SHORT).show();
+                     return;
+                 }else if(currentEquation.endsWith("+")){
+                     Toast.makeText(this, "Illegal start of equation", Toast.LENGTH_SHORT).show();
+                     return;
+                 }else if(currentEquation.endsWith("*")){
+                     Toast.makeText(this, "Illegal start of equation", Toast.LENGTH_SHORT).show();
+                     return;
+                 }else if(currentEquation.endsWith("-")){
+                     Toast.makeText(this, "Illegal start of equation", Toast.LENGTH_SHORT).show();
+                     return;
+                 }
+            }
+             if(currentEquation.endsWith(".") && !currentEquation.isEmpty()){
+                equationEditText.setText(currentEquation);
+                resultTextView.setText("");
+            }
+            if(currentEquation.endsWith("/")){
+                equationEditText.setText(currentEquation+"0"+ buttonValue);
+            }
+            if(currentEquation.contains(".")){
+                resultTextView.setText("");
+                equationEditText.setText("");
+            }
+        }
+        else {
             equationEditText.setText(currentEquation + buttonValue);
             resultTextView.setText(calculate(equationEditText.getText().toString()));
         }
     }
-    public static String calculate(String input) {
+    public String calculate(String input) {
         String[] operands = input.split("[+\\-*/]");
         String[] operators = input.replaceAll("[^+\\-*/]", "").split("");
         double result = 0;
         boolean firstOperand = true;
         for (int i = 0; i < operands.length; i++) {
-            double operand;
+            double operand = 0;
             if (operands[i].isEmpty()) {
                 operand = 0;
             } else {
-                operand = Double.parseDouble(operands[i]);
+                try{
+                    operand = Double.parseDouble(operands[i]);
+                }catch(Exception e){
+                    return "invalid format";
+                }
             }
             if (firstOperand) {
                 result = operand;
@@ -174,7 +208,14 @@ public class MainActivity extends AppCompatActivity {
                         result *= operand;
                         break;
                     case "/":
-                        result /= operand;
+                        try{
+                            if(operand != 0){
+                                result /= operand;
+                            }
+                            clear= true;
+                        }catch (ArithmeticException e ){
+                            Toast.makeText(getApplicationContext(),"can't divide by zero",Toast.LENGTH_SHORT);
+                        }
                         break;
                 }
             }
